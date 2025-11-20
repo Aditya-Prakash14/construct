@@ -1,0 +1,149 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+---
+
+<DashboardLayout title="Find Jobs">
+	<div class="search-bar glass-panel">
+		<input type="text" placeholder="Search for roles (e.g. Frontend Developer)..." />
+		<button class="btn btn-primary">Search</button>
+	</div>
+
+	<div id="jobs-container" class="jobs-grid">
+		<!-- Jobs will be loaded here -->
+		<div class="loading-state">
+			<div class="spinner"></div>
+			<p>Scanning job portals...</p>
+		</div>
+	</div>
+</DashboardLayout>
+
+<script>
+	// Fetch jobs from backend
+	async function loadJobs() {
+		const container = document.getElementById('jobs-container');
+		// In production (served by backend), use relative path. In dev, use localhost.
+		const API_BASE = import.meta.env.PROD ? '' : 'http://localhost:3001';
+		
+		try {
+			const response = await fetch(`${API_BASE}/api/jobs`);
+			const jobs = await response.json();
+			
+			if (jobs.length === 0) {
+				container.innerHTML = '<p>No jobs found.</p>';
+				return;
+			}
+
+			container.innerHTML = jobs.map(job => `
+				<div class="job-card glass-panel">
+					<div class="match-badge">${job.matchScore}% Match</div>
+					<div class="job-header">
+						<h3>${job.title}</h3>
+						<span class="company">${job.company}</span>
+					</div>
+					<div class="job-tags">
+						<span class="tag">${job.location}</span>
+						<span class="tag">${job.type}</span>
+					</div>
+					<div class="job-actions">
+						<button class="btn btn-primary btn-sm">Apply Now</button>
+						<button class="btn btn-secondary btn-sm">View Details</button>
+					</div>
+				</div>
+			`).join('');
+		} catch (error) {
+			console.error('Error fetching jobs:', error);
+			container.innerHTML = '<p class="error">Failed to load jobs. Is the backend running?</p>';
+		}
+	}
+
+	// Load on mount
+	loadJobs();
+</script>
+
+<style>
+	.search-bar {
+		display: flex;
+		gap: var(--space-sm);
+		padding: var(--space-sm);
+		margin-bottom: var(--space-lg);
+	}
+
+	.search-bar input {
+		flex: 1;
+		background: transparent;
+		border: none;
+		color: var(--color-text-primary);
+		font-size: 1rem;
+		padding: 0 var(--space-sm);
+		outline: none;
+	}
+
+	.jobs-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: var(--space-md);
+	}
+
+	.job-card {
+		padding: var(--space-md);
+		position: relative;
+		transition: transform 0.2s;
+	}
+
+	.job-card:hover {
+		transform: translateY(-4px);
+		border-color: var(--color-primary);
+	}
+
+	.match-badge {
+		position: absolute;
+		top: var(--space-sm);
+		right: var(--space-sm);
+		background: rgba(16, 185, 129, 0.2);
+		color: var(--color-success);
+		padding: 0.25rem 0.5rem;
+		border-radius: var(--radius-sm);
+		font-size: 0.75rem;
+		font-weight: 700;
+	}
+
+	.job-header {
+		margin-bottom: var(--space-md);
+	}
+
+	.job-header h3 {
+		font-size: 1.1rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.company {
+		color: var(--color-text-secondary);
+		font-size: 0.9rem;
+	}
+
+	.job-tags {
+		display: flex;
+		gap: var(--space-xs);
+		margin-bottom: var(--space-md);
+	}
+
+	.tag {
+		background: rgba(255, 255, 255, 0.05);
+		padding: 0.25rem 0.5rem;
+		border-radius: var(--radius-sm);
+		font-size: 0.75rem;
+		color: var(--color-text-secondary);
+	}
+
+	.job-actions {
+		display: flex;
+		gap: var(--space-sm);
+	}
+
+	.loading-state {
+		grid-column: 1 / -1;
+		text-align: center;
+		padding: var(--space-xl);
+		color: var(--color-text-secondary);
+	}
+</style>

@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ApplyMate - AI Job Application Agent">
+	<header class="navbar glass-panel">
+		<div class="container nav-content">
+			<div class="logo">Apply<span class="text-gradient">Mate</span></div>
+			<nav>
+				<a href="#features">Features</a>
+				<a href="#how-it-works">How it Works</a>
+				<a href="/dashboard" class="btn btn-primary btn-sm">Get Started</a>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<div class="hero-glow"></div>
+			<div class="container hero-content">
+				<h1 class="animate-fade-in">Stop Searching. <br />Start <span class="text-gradient">Getting Hired.</span></h1>
+				<p class="subtitle animate-fade-in" style="animation-delay: 0.2s">
+					Your personal AI career assistant that automates job hunting. 
+					From finding matches to tailoring resumes—we handle the boring stuff.
+				</p>
+				<div class="cta-group animate-fade-in" style="animation-delay: 0.4s">
+					<a href="/dashboard" class="btn btn-primary">Launch Dashboard</a>
+					<a href="#demo" class="btn btn-secondary">Watch Demo</a>
+				</div>
+			</div>
+		</section>
+
+		<section id="features" class="features container">
+			<h2 class="section-title">Why ApplyMate?</h2>
+			<div class="grid">
+				<div class="card glass-panel">
+					<div class="icon">🚀</div>
+					<h3>Smart Matching</h3>
+					<p>AI scans thousands of jobs to find the ones that actually fit your skills.</p>
+				</div>
+				<div class="card glass-panel">
+					<div class="icon">📝</div>
+					<h3>Auto-Tailored Resumes</h3>
+					<p>We rewrite your resume for every single application to beat the ATS.</p>
+				</div>
+				<div class="card glass-panel">
+					<div class="icon">🤖</div>
+					<h3>AI Outreach</h3>
+					<p>Draft personalized messages to recruiters in seconds.</p>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	/* Navbar */
+	.navbar {
+		position: fixed;
+		top: var(--space-sm);
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		max-width: 1200px;
+		z-index: 100;
+		padding: var(--space-sm) var(--space-md);
+		border-radius: var(--radius-full);
+	}
+
+	.nav-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo {
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-size: 1.5rem;
+		letter-spacing: -0.02em;
+	}
+
+	.navbar nav {
+		display: flex;
+		gap: var(--space-md);
+		align-items: center;
+	}
+
+	.navbar a:not(.btn) {
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--color-text-secondary);
+	}
+
+	.navbar a:not(.btn):hover {
+		color: var(--color-text-primary);
+	}
+
+	.btn-sm {
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
+	}
+
+	/* Hero */
+	.hero {
+		position: relative;
+		padding-top: 180px;
+		padding-bottom: 100px;
+		text-align: center;
+		overflow: hidden;
+	}
+
+	.hero-glow {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 600px;
+		height: 600px;
+		background: var(--gradient-glow);
+		z-index: -1;
+		filter: blur(80px);
+	}
+
+	.hero h1 {
+		font-size: 4.5rem;
+		margin-bottom: var(--space-md);
+		letter-spacing: -0.03em;
+	}
+
+	.subtitle {
+		font-size: 1.25rem;
+		color: var(--color-text-secondary);
+		max-width: 600px;
+		margin: 0 auto var(--space-xl);
+	}
+
+	.cta-group {
+		display: flex;
+		gap: var(--space-sm);
+		justify-content: center;
+	}
+
+	/* Features */
+	.features {
+		padding: var(--space-2xl) var(--space-sm);
+	}
+
+	.section-title {
+		text-align: center;
+		font-size: 2.5rem;
+		margin-bottom: var(--space-xl);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: var(--space-md);
+	}
+
+	.card {
+		padding: var(--space-lg);
+		transition: transform 0.3s ease;
+	}
+
+	.card:hover {
+		transform: translateY(-5px);
+		border-color: rgba(56, 189, 248, 0.3);
+	}
+
+	.icon {
+		font-size: 2.5rem;
+		margin-bottom: var(--space-sm);
+	}
+
+	.card h3 {
+		margin-bottom: var(--space-xs);
+		font-size: 1.25rem;
+	}
+
+	.card p {
+		color: var(--color-text-secondary);
+		font-size: 0.95rem;
+	}
+</style>
